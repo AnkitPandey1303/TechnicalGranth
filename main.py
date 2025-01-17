@@ -20,8 +20,14 @@ class MultiApp :
 
     def run(self) :
         with st.sidebar :
-            app = option_menu("Select Page", list(self.apps.keys()), self.app)
-        self.apps[app].run()
+            app = option_menu(
+                menu_title='Technical Granth', 
+                options= ['Home', 'Trending', 'Your Posts', 'Account', 'About'],
+                icons= ['🏠', '📈', '📝', '👤', '❓'],
+                menu_icon='📚',
+                default_index=1,
+                styles={"container" : {"padding": "5!important", "back icon": {"color" : "white", 
+                    "font-size": "20px", "text-shadow": "0px 1px 0px rgba(0, 0, 0, 0.5)"},}})
 
         if app== 'Home' :
             home.app()
