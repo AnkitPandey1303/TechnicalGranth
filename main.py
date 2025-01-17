@@ -1,18 +1,37 @@
 import streamlit as st
 
-st.title('Welcome to Technical Granth')
-st.header('This channel is specially created for all those who are eager to learn about software, the latest technology, and technical updates. On our channel, you’ll find videos on the following topics:')
-st.subheader('Welcome to Python Quiz')
+from streamlit_option_menu import option_menu
 
-name = st.text_input('Enter your Name') # text_input() function is used to take input from the user
-fname = st.text_input('Enter your Father name') # text_input() function is used to take input from the user
-address = st.text_area('Enter your Comments') # text_area() function is used to take input from the user
-classdata = st.selectbox('Select your Class', ['5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', 'BCA', 'Btech',]) # selectbox() function is used to create a dropdown list
-button = st.button('Submit') # button() function is used to create a button
-if button:
-    st.markdown(f"""
-Name : {name}
-Father Name : {fname}
-Address : {address}
-Class : {classdata}
-    """)
+import about, account, home, trending, your_posts
+
+st.set_page_config(page_title="Welcome to Technical Granth", layout="wide")
+
+class MultiApp :
+    def __init__(self) :
+        self.apps = {
+            "Home" : home,
+            "Trending" : trending,
+            "Your Posts" : your_posts,
+            "Account" : account,
+            "About" : about
+        }
+
+        self.app = st.sidebar.radio("Navigation", list(self.apps.keys()))
+
+    def run(self) :
+        with st.sidebar :
+            app = option_menu("Select Page", list(self.apps.keys()), self.app)
+        self.apps[app].run()
+
+        if app== 'Home' :
+            home.app()
+        if app== 'Trending' :
+            trending.app()
+        if app== 'Your Posts' :
+            your_posts.app()
+        if app== 'Account' :
+            account.app()
+        if app== 'About' :
+            about.app()
+        
+    #run()  # Run the app
